@@ -87,12 +87,11 @@ export default function FoodPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-in slide-in-from-top-2 duration-300">
-          <span>⚠️</span>
-          <span className="font-medium">다른 키워드로 검색해주세요</span>
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-slate-800/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5 animate-in slide-in-from-top-2 duration-300 text-sm whitespace-nowrap">
+          <span className="font-medium">다른 음식으로 검색해주세요</span>
           <button 
             onClick={() => setShowToast(false)}
-            className="ml-2 hover:bg-red-600 rounded-full w-5 h-5 flex items-center justify-center text-xs"
+            className="ml-1.5 hover:bg-white/20 rounded-full w-3.5 h-3.5 flex items-center justify-center text-xs"
           >
             ×
           </button>

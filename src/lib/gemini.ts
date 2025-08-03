@@ -211,12 +211,26 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
     } catch (error) {
       console.error(`Error with model ${modelName}:`, error);
       
+      // If it's a food validation error, throw immediately (don't retry)
+      if (error instanceof Error && error.message.includes('음식이 아닙니다')) {
+        throw error;
+      }
+      
+      // If it's a rate limit error, try the next model
+      if (error instanceof Error && error.message.includes('429')) {
+        console.log(`Rate limited on ${modelName}, trying next model...`);
+        if (modelName === MODELS[MODELS.length - 1]) {
+          throw new Error('문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+        continue;
+      }
+      
       // If this is the last model, throw the error
       if (modelName === MODELS[MODELS.length - 1]) {
         throw error;
       }
       
-      // Otherwise, continue to the next model
+      // For other errors, continue to the next model
       continue;
     }
   }

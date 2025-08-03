@@ -84,6 +84,13 @@ export default function FoodResultsPage() {
   if (error) {
     const isFoodValidationError = error.includes('음식이 아닙니다')
     
+    // Redirect to food page with error parameter for food validation errors
+    if (isFoodValidationError) {
+      window.location.href = '/food?error=invalid_food'
+      return null
+    }
+    
+    // For other errors, show the error page
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="container mx-auto px-4 py-8">
@@ -94,16 +101,17 @@ export default function FoodResultsPage() {
               </Button>
             </Link>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
-              {isFoodValidationError ? "🤔 음식을 찾을 수 없어요" : "😔 죄송합니다"}
+              😔 죄송합니다
             </h1>
             <p className="text-lg text-slate-600 mb-8">
-              {isFoodValidationError ? error : "AI 추천 시스템에 일시적으로 연결할 수 없습니다.<br />잠시 후 다시 시도해주세요."}
+              AI 추천 시스템에 일시적으로 연결할 수 없습니다.<br />
+              잠시 후 다시 시도해주세요.
             </p>
             <Button 
               onClick={() => window.location.reload()} 
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
             >
-              {isFoodValidationError ? "다른 음식 시도하기" : "다시 시도"}
+              다시 시도
             </Button>
           </div>
         </div>
