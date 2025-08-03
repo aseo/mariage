@@ -9,7 +9,7 @@ import { DrinkRecommendation } from "@/lib/gemini"
 
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void
+    gtag: (...args: unknown[]) => void
   }
 }
 
