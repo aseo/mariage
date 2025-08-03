@@ -75,10 +75,26 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
     return cachedResult;
   }
 
-  const prompt = `다음은 한국 요리에 어울리는 술 페어링 추천 요청입니다. 한국 문화를 이해하고, 맛 조합에 대한 감각이 있는 전문가처럼 행동해주세요.  
-사용자가 고른 음식에 대해 아래 조건을 지켜서 술 3가지를 추천해주세요.
+  const prompt = `다음은 한국 요리에 어울리는 술 페어링 추천 요청입니다. 한국 문화를 이해하고, 맛 조합에 대한 감각이 있는 전문가처럼 행동해주세요.
 
-선택한 요리: ${foodItem}
+**중요: 먼저 입력된 항목이 음식인지 확인해주세요.**
+
+입력된 항목: ${foodItem}
+
+**음식 검증 규칙:**
+1. 입력된 항목이 음식, 요리, 식재료가 맞는지 확인하세요
+2. 컴퓨터, 사랑, 책, 자동차 등 음식이 아닌 항목이 입력되면 에러를 반환하세요
+3. 오타나 비슷한 음식명은 허용하세요 (예: "삼겸살" → "삼겹살", "치키" → "치킨")
+4. 일반적인 음식명이 아니지만 음식인 경우는 허용하세요
+
+**음식이 아닌 경우 에러 응답:**
+{
+  "error": true,
+  "message": "입력하신 '${foodItem}'은(는) 음식이 아닙니다. 음식 이름을 입력해주세요. (예: 삼겹살, 치킨, 회, 김치찌개 등)"
+}
+
+**음식인 경우 정상 응답:**
+사용자가 고른 음식에 대해 아래 조건을 지켜서 술 3가지를 추천해주세요.
 
 조건:
 
@@ -90,7 +106,7 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
 4. 등급은 A+, A, A-, B+, B 중에서 하나를 선택해주세요.
 5. 설명은 2~3문장으로, **맛의 조화나 느낌**을 중심으로 **친근하고 자연스러운 말투**로 작성해주세요.
 6. 각 술의 설명은 **2~3문장**으로, 해당 요리와의 어울림 이유를 **친근하고 재밌는 톤**으로 적어주세요.
-   - 예: “매콤한 돼지갈비라면, 홉의 쌉쌀함이 기름기를 잡아주고 괜찮은 조합이 될 수 있어요.”
+   - 예: "매콤한 돼지갈비라면, 홉의 쌉쌀함이 기름기를 잡아주고 괜찮은 조합이 될 수 있어요."
 7. 최종 결과는 **JSON만 출력**해주세요.
 
 {
@@ -175,6 +191,14 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
       // Extract JSON from the response
       const jsonMatch = text.match(/\[[\s\S]*\]/);
       if (!jsonMatch) {
+        // Check if it's an error response
+        const errorMatch = text.match(/\{[^}]*"error"[^}]*\}/);
+        if (errorMatch) {
+          const errorData = JSON.parse(errorMatch[0]);
+          if (errorData.error) {
+            throw new Error(errorData.message);
+          }
+        }
         throw new Error('Invalid response format');
       }
       

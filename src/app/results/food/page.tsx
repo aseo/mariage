@@ -7,12 +7,28 @@ import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
 import { DrinkRecommendation } from "@/lib/gemini"
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 export default function FoodResultsPage() {
   const [foodItem, setFoodItem] = useState('Your Food')
   const [isLoading, setIsLoading] = useState(true)
   const [recommendations, setRecommendations] = useState<DrinkRecommendation[]>([])
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+
+  const handleTryAnotherFood = () => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'click', {
+        event_category: 'engagement',
+        event_label: 'try_another_food',
+        value: 1
+      })
+    }
+  }
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -26,6 +42,10 @@ export default function FoodResultsPage() {
         const response = await fetch(`/api/recommendations/drinks?food=${encodeURIComponent(food)}`)
         
         if (!response.ok) {
+          const errorData = await response.json()
+          if (errorData.error && errorData.error.includes('음식이 아닙니다')) {
+            throw new Error(errorData.error)
+          }
           throw new Error('Failed to fetch recommendations')
         }
         
@@ -33,7 +53,11 @@ export default function FoodResultsPage() {
         setRecommendations(data.recommendations)
       } catch (err) {
         console.error('Error fetching recommendations:', err)
-        setError('Failed to load recommendations. Please try again.')
+        if (err instanceof Error && err.message.includes('음식이 아닙니다')) {
+          setError(err.message)
+        } else {
+          setError('Failed to load recommendations. Please try again.')
+        }
       } finally {
         setIsLoading(false)
       }
@@ -58,6 +82,8 @@ export default function FoodResultsPage() {
   }
 
   if (error) {
+    const isFoodValidationError = error.includes('음식이 아닙니다')
+    
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="container mx-auto px-4 py-8">
@@ -68,17 +94,16 @@ export default function FoodResultsPage() {
               </Button>
             </Link>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
-              😔 죄송합니다
+              {isFoodValidationError ? "🤔 음식을 찾을 수 없어요" : "😔 죄송합니다"}
             </h1>
             <p className="text-lg text-slate-600 mb-8">
-              AI 추천 시스템에 일시적으로 연결할 수 없습니다.<br />
-              잠시 후 다시 시도해주세요.
+              {isFoodValidationError ? error : "AI 추천 시스템에 일시적으로 연결할 수 없습니다.<br />잠시 후 다시 시도해주세요."}
             </p>
             <Button 
               onClick={() => window.location.reload()} 
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
             >
-              다시 시도
+              {isFoodValidationError ? "다른 음식 시도하기" : "다시 시도"}
             </Button>
           </div>
         </div>
@@ -91,11 +116,6 @@ export default function FoodResultsPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/food" className="inline-block mb-4">
-            <Button variant="ghost" className="text-slate-600 hover:text-slate-800">
-              ← Back to Food Selection
-            </Button>
-          </Link>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
             {foodItem}에는 이거지🧡
           </h1>
@@ -124,7 +144,11 @@ export default function FoodResultsPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl sm:text-3xl font-bold text-green-600">
+                    <div className={`text-2xl sm:text-3xl font-bold ${
+                      drink.grade === 'A+' ? 'text-emerald-500' :
+                      drink.grade === 'A' || drink.grade === 'A-' ? 'text-blue-500' :
+                      'text-sky-500'
+                    }`}>
                       {drink.grade}
                     </div>
                   </div>
@@ -153,18 +177,15 @@ export default function FoodResultsPage() {
 
         {/* Action Buttons */}
         <div className="text-center mt-12">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/food">
-              <Button variant="ghost" className="text-slate-600 hover:text-slate-800 px-4 py-2 text-sm font-medium">
-                ← 다른 음식 알아보기
-              </Button>
-            </Link>
-            <Link href="/">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                Start Over
-              </Button>
-            </Link>
-          </div>
+          <Link href="/food">
+            <Button 
+              variant="ghost" 
+              onClick={handleTryAnotherFood}
+              className="text-slate-600 hover:text-slate-800 px-4 py-2 text-sm font-medium"
+            >
+              ← 다른 음식 알아보기
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

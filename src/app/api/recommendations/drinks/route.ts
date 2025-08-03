@@ -33,6 +33,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ recommendations });
   } catch (error) {
     console.error('Error in drink recommendations API:', error);
+    
+    // Check if it's a food validation error
+    if (error instanceof Error && error.message.includes('음식이 아닙니다')) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Failed to get recommendations' },
       { status: 500 }

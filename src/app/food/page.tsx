@@ -2,34 +2,83 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { foodCategories, searchFoods } from "@/data/food-drink-data"
+
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
 
 export default function FoodPage() {
   const [customFood, setCustomFood] = useState("")
   const [open, setOpen] = useState(false)
+  const [displayedFoods, setDisplayedFoods] = useState(foodCategories.slice(0, 20))
+  const [showToast, setShowToast] = useState(false)
   const router = useRouter()
 
   const handleCustomSubmit = () => {
     if (customFood.trim()) {
+      // Track search event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'search', {
+          event_category: 'engagement',
+          event_label: 'food_search',
+          search_term: customFood.trim(),
+          value: 1
+        })
+      }
       router.push(`/results/food?food=${encodeURIComponent(customFood.trim())}`)
     }
   }
 
   const handleCategoryClick = (categoryName: string) => {
+    // Track category click as search
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'search', {
+        event_category: 'engagement',
+        event_label: 'food_category_click',
+        search_term: categoryName,
+        value: 1
+      })
+    }
     router.push(`/results/food?food=${encodeURIComponent(categoryName)}`)
   }
 
-  // Randomize the order of food items and show only top 20
-  const randomizedFoods = useMemo(() => 
-    [...foodCategories].sort(() => Math.random() - 0.5).slice(0, 20), 
-    []
-  )
+  // Check for error parameter and show toast
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const error = urlParams.get('error')
+    if (error === 'invalid_food') {
+      setShowToast(true)
+      // Remove error parameter from URL
+      const newUrl = window.location.pathname
+      window.history.replaceState({}, '', newUrl)
+      // Hide toast after 3 seconds
+      setTimeout(() => setShowToast(false), 3000)
+    }
+  }, [])
+
+  // Randomize food items after component mounts to avoid hydration mismatch
+  useEffect(() => {
+    const randomized = [...foodCategories].sort(() => Math.random() - 0.5).slice(0, 20)
+    setDisplayedFoods(randomized)
+  }, [])
 
   const handleSuggestionClick = (foodName: string) => {
     setCustomFood(foodName)
     setOpen(false)
+    // Track suggestion click as search
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'search', {
+        event_category: 'engagement',
+        event_label: 'food_suggestion_click',
+        search_term: foodName,
+        value: 1
+      })
+    }
     router.push(`/results/food?food=${encodeURIComponent(foodName)}`)
   }
 
@@ -37,16 +86,25 @@ export default function FoodPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-in slide-in-from-top-2 duration-300">
+          <span>⚠️</span>
+          <span className="font-medium">다른 키워드로 검색해주세요</span>
+          <button 
+            onClick={() => setShowToast(false)}
+            className="ml-2 hover:bg-red-600 rounded-full w-5 h-5 flex items-center justify-center text-xs"
+          >
+            ×
+          </button>
+        </div>
+      )}
+      
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block mb-4">
-            <Button variant="ghost" className="text-slate-600 hover:text-slate-800">
-              ← 뒤로가기
-            </Button>
-          </Link>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
-            🍽️ 뭐 먹을 거야?
+            🍽️ 오늘 내 메뉴는?
           </h1>
           <p className="text-lg text-slate-600">
             음식을 선택하거나 직접 입력해보세요
@@ -114,11 +172,8 @@ export default function FoodPage() {
 
         {/* Food Categories Grid */}
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-xl font-semibold text-slate-800 mb-6 text-center">
-            인기 음식들
-          </h2>
           <div className="flex flex-wrap gap-3 justify-center">
-            {randomizedFoods.map((food) => (
+            {displayedFoods.map((food) => (
               <Button
                 key={food.name}
                 variant="outline"
