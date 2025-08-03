@@ -1,10 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import Link from "next/link"
 import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
@@ -90,7 +86,7 @@ export default function FoodPage() {
                   className="w-full flex items-center gap-3 p-3 text-left hover:bg-slate-50 transition-colors duration-150 cursor-pointer border-b border-slate-100"
                 >
                   <span className="text-xl">🍽️</span>
-                  <span className="text-base font-medium">"{customFood}" 검색하기</span>
+                  <span className="text-base font-medium">&quot;{customFood}&quot; 검색하기</span>
                 </button>
                 
                 {/* Show filtered suggestions */}

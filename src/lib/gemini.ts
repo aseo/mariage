@@ -8,7 +8,7 @@ const MODELS = [
 const API_KEY = process.env.GOOGLE_AI_API_KEY!;
 
 // Simple in-memory cache for API responses
-const cache = new Map<string, { data: any; timestamp: number }>();
+const cache = new Map<string, { data: DrinkRecommendation[]; timestamp: number }>();
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 // Debug: Check if API key is loaded
@@ -20,7 +20,7 @@ function getCacheKey(item: string): string {
   return `drink:${item.toLowerCase().trim()}`;
 }
 
-function getFromCache(key: string): any | null {
+function getFromCache(key: string): DrinkRecommendation[] | null {
   const cached = cache.get(key);
   if (!cached) return null;
   
@@ -33,7 +33,7 @@ function getFromCache(key: string): any | null {
   return cached.data;
 }
 
-function setCache(key: string, data: any): void {
+function setCache(key: string, data: DrinkRecommendation[]): void {
   cache.set(key, { data, timestamp: Date.now() });
 }
 

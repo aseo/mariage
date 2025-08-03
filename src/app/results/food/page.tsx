@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+
 import { useEffect, useState, useRef } from "react"
 import { DrinkRecommendation } from "@/lib/gemini"
 

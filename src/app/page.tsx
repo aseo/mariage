@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -9,9 +9,11 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="mb-6">
-            <img 
+            <Image 
               src="/food-drink-pairing.png" 
               alt="Beer mug and pizza slice dancing together - perfect food and drink pairing"
+              width={400}
+              height={300}
               className="mx-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-auto"
             />
           </div>
