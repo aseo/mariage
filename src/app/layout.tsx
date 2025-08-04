@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'dTkoAg2ORwvYNwmD7SMrH68hTPo8d6e74jl', // Google Search Console verification code
+    google: '64FxwFITTsnpBMe1Ke2PIxDbQkkWmr_7t1D4PlpFyAQ', // Google Search Console verification code
     // naver: 'your-naver-verification-code', // Add if you have Naver Webmaster Tools
   },
   appleWebApp: {
