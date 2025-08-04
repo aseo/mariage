@@ -22,9 +22,8 @@ export default function FoodPage() {
     if (customFood.trim()) {
       // Track search event
       if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'search', {
-          event_category: 'engagement',
-          event_label: 'food_search',
+        window.gtag('event', 'food_search', {
+          event_category: 'search',
           search_term: customFood.trim(),
           value: 1
         })
@@ -33,17 +32,16 @@ export default function FoodPage() {
     }
   }
 
-  const handleCategoryClick = (categoryName: string) => {
-    // Track category click as search
+  const handleSuggestionClick = (foodName: string) => {
+    // Track suggestion button click as search
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'search', {
-        event_category: 'engagement',
-        event_label: 'food_category_click',
-        search_term: categoryName,
+      window.gtag('event', 'suggestion_search', {
+        event_category: 'search',
+        search_term: foodName,
         value: 1
       })
     }
-    router.push(`/results/food?food=${encodeURIComponent(categoryName)}`)
+    router.push(`/results/food?food=${encodeURIComponent(foodName)}`)
   }
 
   // Check for error parameter and show toast
@@ -66,14 +64,13 @@ export default function FoodPage() {
     setDisplayedFoods(randomized)
   }, [])
 
-  const handleSuggestionClick = (foodName: string) => {
+  const handleDropdownClick = (foodName: string) => {
     setCustomFood(foodName)
     setOpen(false)
-    // Track suggestion click as search
+    // Track dropdown click as search
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'search', {
-        event_category: 'engagement',
-        event_label: 'food_suggestion_click',
+      window.gtag('event', 'dropdown_search', {
+        event_category: 'search',
         search_term: foodName,
         value: 1
       })
@@ -138,7 +135,7 @@ export default function FoodPage() {
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-slate-200 z-50 max-h-64 overflow-y-auto">
                 {/* Show user's input as first option */}
                 <button
-                  onClick={() => handleSuggestionClick(customFood)}
+                  onClick={() => handleDropdownClick(customFood)}
                   className="w-full flex items-center gap-3 p-3 text-left hover:bg-slate-50 transition-colors duration-150 cursor-pointer border-b border-slate-100"
                 >
                   <span className="text-xl">🍽️</span>
@@ -154,7 +151,7 @@ export default function FoodPage() {
                     {filteredFoods.map((food) => (
                       <button
                         key={food.name}
-                        onClick={() => handleSuggestionClick(food.name)}
+                        onClick={() => handleDropdownClick(food.name)}
                         className="w-full flex items-center gap-3 p-3 text-left hover:bg-slate-50 transition-colors duration-150 cursor-pointer"
                       >
                         <span className="text-xl">{food.emoji}</span>
@@ -175,7 +172,7 @@ export default function FoodPage() {
               <Button
                 key={food.name}
                 variant="outline"
-                onClick={() => handleCategoryClick(food.name)}
+                onClick={() => handleSuggestionClick(food.name)}
                 className="rounded-full px-4 py-2 bg-white/80 backdrop-blur-sm border-slate-200 hover:bg-primary/10 hover:border-primary/30 hover:shadow-md transition-all duration-200 flex items-center gap-2 text-sm font-medium text-slate-700 h-auto"
               >
                 <span className="text-lg">{food.emoji}</span>

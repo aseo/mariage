@@ -22,9 +22,8 @@ export default function FoodResultsPage() {
 
   const handleTryAnotherFood = () => {
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'click', {
+      window.gtag('event', 'try_another_food', {
         event_category: 'engagement',
-        event_label: 'try_another_food',
         value: 1
       })
     }
@@ -51,6 +50,16 @@ export default function FoodResultsPage() {
         
         const data = await response.json()
         setRecommendations(data.recommendations)
+        
+        // Track successful results view
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'view_results', {
+            event_category: 'results',
+            food_item: food,
+            result_count: data.recommendations.length,
+            value: 1
+          })
+        }
       } catch (err) {
         console.error('Error fetching recommendations:', err)
         if (err instanceof Error && err.message.includes('음식이 아닙니다')) {

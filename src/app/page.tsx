@@ -13,9 +13,8 @@ declare global {
 export default function Home() {
   const handleStartClick = () => {
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'click', {
+      window.gtag('event', 'start_journey', {
         event_category: 'engagement',
-        event_label: 'start_button',
         value: 1
       })
     }
