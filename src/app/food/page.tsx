@@ -96,9 +96,9 @@ export default function FoodPage() {
         </div>
       )}
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-5">
         {/* Header */}
-        <div className="text-center mb-8 pt-12 sm:pt-16">
+        <div className="text-center mb-8 pt-8 sm:pt-10">
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
             🍽️ 오늘 내 메뉴는?
           </h1>
