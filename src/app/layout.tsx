@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const pretendard = localFont({
@@ -30,12 +31,13 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "오늘 안주엔 이 술 어때요? | AI 안주 궁합 추천",
-  description: "어떤 술이 오늘 안주에 어울릴까? 고민 끝! AI가 딱 맞는 술을 추천해드립니다. 삼겹살, 치킨, 회 등 모든 안주에 어울리는 술을 찾아보세요.",
+  title: "안주 짝꿍 찾기 | 오늘 안주엔 이 술 어때요? | AI 안주 궁합 추천",
+  description: "안주 짝꿍 찾기! 어떤 술이 오늘 안주에 어울릴까? 고민 끝! AI가 딱 맞는 술을 추천해드립니다. 삼겹살, 치킨, 회 등 모든 안주에 어울리는 술을 찾아보세요.",
   keywords: [
-    "안주 궁합", "술 추천", "음식 술 페어링", "삼겹살 술", "치킨 술", "회 술", 
+    "안주의 짝꿍 찾기", "안주 궁합", "술 추천", "음식 술 페어링", "삼겹살 술", "치킨 술", "회 술", "안주 짝꿍",
     "맥주 안주", "소주 안주", "와인 안주", "위스키 안주", "AI 추천", "음식 궁합",
-    "술안주", "안주추천", "술추천", "음식페어링", "한국술", "맥주추천", "소주추천"
+    "술안주", "안주추천", "술추천", "음식페어링", "한국술", "맥주추천", "소주추천",
+    "안주 짝꿍", "음식 술 매칭", "술 안주 추천", "AI 안주 추천"
   ],
   authors: [{ name: "AI 안주 궁합 추천" }],
   creator: "AI 안주 궁합 추천",
@@ -50,8 +52,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "오늘 안주엔 이 술 어때요? | AI 안주 궁합 추천",
-    description: "어떤 술이 오늘 안주에 어울릴까? 고민 끝! AI가 딱 맞는 술을 추천해드립니다.",
+    title: "내 안주의 짝꿍 찾기 | 오늘 안주엔 이 술 어때요? | AI 안주 궁합 추천",
+    description: "내 안주의 짝꿍 찾기! 어떤 술이 오늘 안주에 어울릴까? 고민 끝! AI가 딱 맞는 술을 추천해드립니다.",
           url: 'https://anju-mate.vercel.app',
     siteName: 'AI 안주 궁합 추천',
     locale: 'ko_KR',
@@ -83,7 +85,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Replace with your Google Search Console verification code
+    google: 'dTkoAg2ORwvYNwmD7SMrH68hTPo8d6e74jl', // Google Search Console verification code
     // naver: 'your-naver-verification-code', // Add if you have Naver Webmaster Tools
   },
   appleWebApp: {
@@ -92,7 +94,7 @@ export const metadata: Metadata = {
     title: "오늘 안주엔 이 술 어때요?",
   },
   other: {
-    'naver-site-verification': 'your-naver-verification-code', // Replace with your Naver verification code
+    // 'naver-site-verification': 'your-naver-verification-code', // Add your Naver verification code
   },
 };
 
@@ -141,6 +143,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
