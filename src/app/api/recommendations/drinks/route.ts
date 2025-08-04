@@ -30,7 +30,12 @@ export async function GET(request: NextRequest) {
 
     const recommendations = await getDrinkRecommendations(sanitizedFood);
     
-    return NextResponse.json({ recommendations });
+    // Return response with cache headers - same URL = same results, different URL = different results
+    const response = NextResponse.json({ recommendations });
+    response.headers.set('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+    response.headers.set('Vary', 'Accept, Accept-Language'); // Vary by request headers to allow URL-based caching
+    
+    return response;
   } catch (error) {
     console.error('Error in drink recommendations API:', error);
     

@@ -29,6 +29,44 @@ export default function FoodResultsPage() {
     }
   }
 
+  const handleShareClick = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      
+      // Track share event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'share_results', {
+          event_category: 'engagement',
+          food_item: foodItem,
+          value: 1
+        })
+      }
+      
+      // Show temporary success feedback
+      const button = document.getElementById('share-results-button')
+      if (button) {
+        const originalHTML = button.innerHTML
+        button.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          URL 복사 완료
+        `
+        // Keep the primary color styling
+        button.className = button.className.replace('text-primary/80', 'text-primary').replace('border-primary/80', 'border-primary')
+        setTimeout(() => {
+          button.innerHTML = originalHTML
+          // Restore original styling
+          button.className = button.className.replace('text-primary', 'text-primary/80').replace('border-primary', 'border-primary/80')
+        }, 2000)
+      }
+    } catch (err) {
+      console.error('Failed to copy URL:', err)
+    }
+  }
+
+
+
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
@@ -37,8 +75,13 @@ export default function FoodResultsPage() {
         const food = urlParams.get('food') || 'Your Food'
         setFoodItem(food)
         
-        // Fetch recommendations from Gemini API
-        const response = await fetch(`/api/recommendations/drinks?food=${encodeURIComponent(food)}`)
+        // Fetch recommendations from Gemini API with URL-based caching
+        const response = await fetch(`/api/recommendations/drinks?food=${encodeURIComponent(food)}`, {
+          cache: 'force-cache', // Force cache for URL consistency
+          headers: {
+            'Cache-Control': 'max-age=86400' // Cache for 24 hours
+          }
+        })
         
         if (!response.ok) {
           const errorData = await response.json()
@@ -132,7 +175,7 @@ export default function FoodResultsPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 pt-12 sm:pt-16">
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
             {foodItem}에는 이거지🧡
           </h1>
@@ -193,12 +236,25 @@ export default function FoodResultsPage() {
         </div>
 
         {/* Action Buttons */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 space-y-4">
+          <div>
+            <button 
+              id="share-results-button"
+              onClick={handleShareClick}
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 border border-primary hover:border-primary/80 px-4 py-2 rounded-lg transition-all duration-200 text-lg font-medium"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+              결과 공유하기
+            </button>
+          </div>
+          
           <Link href="/food">
             <Button 
-              variant="ghost" 
+              variant="ghost"
               onClick={handleTryAnotherFood}
-              className="text-slate-600 hover:text-slate-800 px-4 py-2 text-sm font-medium"
+              className="text-slate-700 hover:text-slate-900 text-lg font-medium"
             >
               ← 다른 음식 알아보기
             </Button>
@@ -207,4 +263,7 @@ export default function FoodResultsPage() {
       </div>
     </div>
   )
-} 
+}
+
+// Force cache for URL consistency - same URL = same results
+export const dynamic = 'force-static'

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { foodCategories, searchFoods } from "@/data/food-drink-data"
 
 declare global {
@@ -97,7 +98,7 @@ export default function FoodPage() {
       
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 pt-12 sm:pt-16">
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
             🍽️ 오늘 내 메뉴는?
           </h1>
@@ -180,6 +181,18 @@ export default function FoodPage() {
               </Button>
             ))}
           </div>
+        </div>
+
+        {/* Back Button */}
+        <div className="text-center mt-12">
+          <Link href="/">
+            <Button 
+              variant="ghost" 
+              className="text-slate-600 hover:text-slate-800 px-3 py-2 text-sm font-medium"
+            >
+              ← 돌아가기
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
