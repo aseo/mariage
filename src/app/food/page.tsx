@@ -96,20 +96,20 @@ export default function FoodPage() {
         </div>
       )}
       
-      <div className="container mx-auto px-4 py-5">
+      <div className="w-full max-w-md mx-auto px-4 py-5">
         {/* Header */}
         <div className="text-center mb-8 pt-8 sm:pt-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
             🍽️ 오늘 내 메뉴는?
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-base sm:text-lg text-slate-600">
             음식을 선택하거나 직접 입력해보세요
           </p>
         </div>
 
         {/* Custom Food Input */}
         <div className="max-w-4xl mx-auto mb-12">
-          <div className="relative">
+          <div className="relative mx-4">
             <input
               type="text"
               placeholder="음식 이름을 입력해보세요..."
@@ -118,7 +118,7 @@ export default function FoodPage() {
                 setCustomFood(e.target.value)
                 setOpen(e.target.value.length > 0)
               }}
-              className="text-2xl sm:text-3xl py-6 px-0 border-0 border-b-2 border-slate-300 focus:border-primary focus:ring-0 bg-transparent placeholder:text-slate-400 font-medium pr-16 w-full outline-none"
+              className="text-xl sm:text-2xl py-6 px-0 border-0 border-b-2 border-slate-300 focus:border-primary focus:ring-0 bg-transparent placeholder:text-slate-400 font-medium pr-16 w-full outline-none"
               onKeyPress={(e) => e.key === 'Enter' && handleCustomSubmit()}
             />
             <button 

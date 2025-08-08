@@ -7,14 +7,15 @@ export interface FoodDrinkItem {
 
 export const foodCategories: FoodDrinkItem[] = [
   // Korean BBQ
-  { name: "삼겹살", emoji: "🥩", category: "Korean BBQ" },
-  { name: "갈비", emoji: "🥩", category: "Korean BBQ" },
+  { name: "삼겹살", emoji: "🥓", category: "Korean BBQ" },
+  { name: "소갈비", emoji: "🥩", category: "Korean BBQ" },
   { name: "불고기", emoji: "🥩", category: "Korean BBQ" },
-  { name: "닭갈비", emoji: "🥩", category: "Korean BBQ" },
+  { name: "닭갈비", emoji: "🐓", category: "Korean BBQ" },
   { name: "돼지갈비", emoji: "🥩", category: "Korean BBQ" },
   { name: "소고기", emoji: "🥩", category: "Korean BBQ" },
-  { name: "항정살", emoji: "🥩", category: "Korean BBQ" },
-  { name: "갈매기살", emoji: "🥩", category: "Korean BBQ" },
+  { name: "스테이크", emoji: "🥩", category: "Korean BBQ" },
+  { name: "항정살", emoji: "🥓", category: "Korean BBQ" },
+  { name: "갈매기살", emoji: "🥓", category: "Korean BBQ" },
   
   // Stew/Soup
   { name: "김치찌개", emoji: "🍲", category: "Stew/Soup" },
@@ -26,7 +27,6 @@ export const foodCategories: FoodDrinkItem[] = [
   { name: "부대찌개", emoji: "🍲", category: "Stew/Soup" },
   { name: "갈비탕", emoji: "🍲", category: "Stew/Soup" },
   { name: "육개장", emoji: "🍲", category: "Stew/Soup" },
-  { name: "동태찌개", emoji: "🍲", category: "Stew/Soup" },
   { name: "추어탕", emoji: "🍲", category: "Stew/Soup" },
   
   // Rice Dishes
@@ -35,9 +35,7 @@ export const foodCategories: FoodDrinkItem[] = [
   { name: "제육덮밥", emoji: "🍚", category: "Rice Dishes" },
   { name: "오징어덮밥", emoji: "🍚", category: "Rice Dishes" },
   { name: "알밥", emoji: "🍚", category: "Rice Dishes" },
-  { name: "곱창덮밥", emoji: "🍚", category: "Rice Dishes" },
   { name: "육회비빔밥", emoji: "🍚", category: "Rice Dishes" },
-  { name: "잔치비빔밥", emoji: "🍚", category: "Rice Dishes" },
   
   // Noodles
   { name: "비빔국수", emoji: "🍜", category: "Noodles" },
@@ -47,20 +45,24 @@ export const foodCategories: FoodDrinkItem[] = [
   { name: "라면", emoji: "🍜", category: "Noodles" },
   { name: "잔치국수", emoji: "🍜", category: "Noodles" },
   { name: "우동", emoji: "🍜", category: "Noodles" },
+  { name: "짜장면", emoji: "🍜", category: "Chinese" },
+  { name: "짬뽕", emoji: "🍜", category: "Chinese" },
+  { name: "탕수육", emoji: "🍗", category: "Chinese" },
+  { name: "깐풍기", emoji: "🍗", category: "Chinese" },
+  { name: "마라탕", emoji: "🍲", category: "Chinese" },
+  { name: "평양냉면", emoji: "🍜", category: "Noodles" },
+  { name: "비빔냉면", emoji: "🍜", category: "Noodles" },
   
   // Street Food
   { name: "떡볶이", emoji: "🍢", category: "Street Food" },
+  { name: "김밥", emoji: "🍙", category: "Street Food" },
   { name: "순대", emoji: "🍢", category: "Street Food" },
-  { name: "튀김", emoji: "🍢", category: "Street Food" },
+  { name: "튀김", emoji: "🍤", category: "Street Food" },
   { name: "오뎅", emoji: "🍢", category: "Street Food" },
-  { name: "핫도그", emoji: "🍢", category: "Street Food" },
-  { name: "쥐포", emoji: "🍢", category: "Street Food" },
+  { name: "핫도그", emoji: "🌭", category: "Street Food" },
   
   // Anju (Drinking Food)
-  { name: "노가리", emoji: "🍺", category: "Anju" },
-  { name: "먹태", emoji: "🍺", category: "Anju" },
   { name: "골뱅이무침", emoji: "🍺", category: "Anju" },
-  { name: "황도", emoji: "🍺", category: "Anju" },
   
   // Pancakes/Jeon
   { name: "김치전", emoji: "🥞", category: "Pancakes/Jeon" },
@@ -70,64 +72,52 @@ export const foodCategories: FoodDrinkItem[] = [
   { name: "감자전", emoji: "🥞", category: "Pancakes/Jeon" },
   
   // Seafood
-  { name: "회", emoji: "🦐", category: "Seafood" },
-  { name: "초밥", emoji: "🦐", category: "Seafood" },
-  { name: "문어숙회", emoji: "🦐", category: "Seafood" },
-  { name: "낙지볶음", emoji: "🦐", category: "Seafood" },
-  { name: "아귀찜", emoji: "🦐", category: "Seafood" },
+  { name: "회", emoji: "🍣", category: "Seafood" },
+  { name: "초밥", emoji: "🍣", category: "Seafood" },
+  { name: "문어숙회", emoji: "🐙", category: "Seafood" },
+  { name: "낙지볶음", emoji: "🐙", category: "Seafood" },
+  { name: "아귀찜", emoji: "🐟", category: "Seafood" },
   { name: "조개구이", emoji: "🦐", category: "Seafood" },
   
   // Skewers/Grill
   { name: "닭꼬치", emoji: "🍢", category: "Skewers/Grill" },
-  { name: "소고기꼬치", emoji: "🍢", category: "Skewers/Grill" },
-  { name: "곱창구이", emoji: "🍢", category: "Skewers/Grill" },
-  { name: "막창구이", emoji: "🍢", category: "Skewers/Grill" },
-  { name: "염통꼬치", emoji: "🍢", category: "Skewers/Grill" },
+  { name: "곱창구이", emoji: "🥩", category: "Skewers/Grill" },
+  { name: "막창구이", emoji: "🥩", category: "Skewers/Grill" },
   
   // Fried Food
   { name: "후라이드 치킨", emoji: "🍗", category: "Fried Food" },
   { name: "양념 치킨", emoji: "🍗", category: "Fried Food" },
   { name: "간장 치킨", emoji: "🍗", category: "Fried Food" },
   { name: "닭강정", emoji: "🍗", category: "Fried Food" },
-  { name: "감자튀김", emoji: "🍗", category: "Fried Food" },
+  { name: "감자튀김", emoji: "🍟", category: "Fried Food" },
   
   // Boiled/Steamed
-  { name: "족발", emoji: "🥓", category: "Boiled/Steamed" },
-  { name: "보쌈", emoji: "🥓", category: "Boiled/Steamed" },
-  { name: "편육", emoji: "🥓", category: "Boiled/Steamed" },
+  { name: "족발", emoji: "🐖", category: "Boiled/Steamed" },
+  { name: "보쌈", emoji: "🐖", category: "Boiled/Steamed" },
+  { name: "편육", emoji: "🐖", category: "Boiled/Steamed" },
   
   // Raw/Cool
   { name: "육회", emoji: "🥩", category: "Raw/Cool" },
   
   // Fermented
-  { name: "홍어삼합", emoji: "🧄", category: "Fermented" },
+  { name: "홍어삼합", emoji: "🐟", category: "Fermented" },
   
   // Western
   { name: "까르보나라", emoji: "🍝", category: "Western" },
   { name: "토마토 파스타", emoji: "🍝", category: "Western" },
   { name: "봉골레 파스타", emoji: "🍝", category: "Western" },
-  { name: "마르게리타 피자", emoji: "🍝", category: "Western" },
-  { name: "페페로니 피자", emoji: "🍝", category: "Western" },
-  { name: "치즈버거", emoji: "🍝", category: "Western" },
+  { name: "마르게리타 피자", emoji: "🍕", category: "Western" },
+  { name: "페페로니 피자", emoji: "🍕", category: "Western" },
+  { name: "치즈버거", emoji: "🍔", category: "Western" },
+  { name: "햄버거", emoji: "🍔", category: "Western" },
   
   // Misc
-  { name: "유부초밥", emoji: "🍽️", category: "Misc" },
-  { name: "계란말이", emoji: "🍽️", category: "Misc" },
-  { name: "계란찜", emoji: "🍽️", category: "Misc" },
+  { name: "유부초밥", emoji: "🍣", category: "Misc" },
+  { name: "계란말이", emoji: "🍳", category: "Misc" },
+  { name: "계란찜", emoji: "🍳", category: "Misc" },
   { name: "잡채", emoji: "🍽️", category: "Misc" },
-  { name: "떡국", emoji: "🍽️", category: "Misc" },
-  { name: "만두", emoji: "🍽️", category: "Misc" },
-  { name: "김치", emoji: "🍽️", category: "Misc" },
-  
-  // Dessert
-  { name: "빙수", emoji: "🍰", category: "Dessert" },
-  { name: "약과", emoji: "🍰", category: "Dessert" },
-  { name: "인절미", emoji: "🍰", category: "Dessert" },
-  { name: "꿀떡", emoji: "🍰", category: "Dessert" },
-  { name: "호떡", emoji: "🍰", category: "Dessert" },
-  { name: "붕어빵", emoji: "🍰", category: "Dessert" },
-  { name: "식혜", emoji: "🍰", category: "Dessert" },
-  { name: "수정과", emoji: "🍰", category: "Dessert" },
+  { name: "떡국", emoji: "🍲", category: "Misc" },
+  { name: "만두", emoji: "🥟", category: "Misc" },
 ]
 
 export const drinkCategories: FoodDrinkItem[] = [

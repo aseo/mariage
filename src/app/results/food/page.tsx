@@ -75,11 +75,11 @@ export default function FoodResultsPage() {
         const food = urlParams.get('food') || 'Your Food'
         setFoodItem(food)
         
-        // Fetch recommendations from Gemini API with URL-based caching
+        // Fetch recommendations from Gemini API
         const response = await fetch(`/api/recommendations/drinks?food=${encodeURIComponent(food)}`, {
-          cache: 'force-cache', // Force cache for URL consistency
+          cache: 'default', // Use browser cache for better UX
           headers: {
-            'Cache-Control': 'max-age=86400' // Cache for 24 hours
+            'Cache-Control': 'max-age=3600' // 1 hour browser cache
           }
         })
         
@@ -173,13 +173,13 @@ export default function FoodResultsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="container mx-auto px-4 py-5">
+      <div className="w-full max-w-md mx-auto px-4 py-5">
         {/* Header */}
         <div className="text-center mb-8 pt-8 sm:pt-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
             {foodItem}에는 이거지🧡
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-base sm:text-lg text-slate-600">
             한 입 먹고 한 잔 딱!
           </p>
         </div>
@@ -195,16 +195,16 @@ export default function FoodResultsPage() {
                       {drink.rank === 1 ? "🥇" : drink.rank === 2 ? "🥈" : "🥉"}
                     </div>
                     <div>
-                      <CardTitle className="text-xl sm:text-2xl text-slate-800">
+                      <CardTitle className="text-lg sm:text-xl text-slate-800">
                         {drink.name}
                       </CardTitle>
-                      <CardDescription className="text-base text-slate-600">
+                      <CardDescription className="text-sm sm:text-base text-slate-600">
                         {drink.category}
                       </CardDescription>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className={`text-2xl sm:text-3xl font-bold ${
+                    <div className={`text-xl sm:text-2xl font-bold ${
                       drink.grade === 'A+' ? 'text-emerald-500' :
                       drink.grade === 'A' || drink.grade === 'A-' ? 'text-blue-500' :
                       'text-sky-500'
@@ -225,7 +225,7 @@ export default function FoodResultsPage() {
                   
                   {/* Explanation */}
                   <div className="flex-1">
-                    <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                    <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
                       {drink.explanation}
                     </p>
                   </div>
