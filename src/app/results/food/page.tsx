@@ -18,7 +18,55 @@ export default function FoodResultsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [recommendations, setRecommendations] = useState<DrinkRecommendation[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [loadingEmojiIndex, setLoadingEmojiIndex] = useState(0)
+  const [loadingStartTime, setLoadingStartTime] = useState<number | null>(null)
   const hasFetched = useRef(false)
+
+  const drinkEmojis = ['🍺', '🍷', '🍶', '🥃', '🍾', '🍹']
+
+  // Rotate emojis during loading
+  useEffect(() => {
+    if (isLoading || loadingStartTime) {
+      // Start rotation immediately
+      const interval = setInterval(() => {
+        setLoadingEmojiIndex((prev) => (prev + 1) % drinkEmojis.length)
+      }, 300) // Faster rotation for more engaging animation
+
+      // Clear interval when loading stops
+      return () => clearInterval(interval)
+    } else {
+      // Reset emoji index when not loading
+      setLoadingEmojiIndex(0)
+    }
+  }, [isLoading, loadingStartTime, drinkEmojis.length])
+
+  // Reset emoji index when loading starts
+  useEffect(() => {
+    if (isLoading || loadingStartTime) {
+      setLoadingEmojiIndex(0)
+    }
+  }, [isLoading, loadingStartTime])
+
+  // Ensure minimum loading time for better UX
+  useEffect(() => {
+    if (isLoading && !loadingStartTime) {
+      setLoadingStartTime(Date.now())
+    }
+    
+    if (!isLoading && loadingStartTime) {
+      const elapsed = Date.now() - loadingStartTime
+      const minLoadingTime = 800 // 0.6 seconds for cached results
+      
+      if (elapsed < minLoadingTime) {
+        const remaining = minLoadingTime - elapsed
+        setTimeout(() => {
+          setLoadingStartTime(null)
+        }, remaining)
+      } else {
+        setLoadingStartTime(null)
+      }
+    }
+  }, [isLoading, loadingStartTime])
 
   const handleTryAnotherFood = () => {
     if (typeof window !== 'undefined' && window.gtag) {
@@ -122,11 +170,13 @@ export default function FoodResultsPage() {
     }
   }, [])
 
-  if (isLoading) {
+  if (isLoading || loadingStartTime) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-4xl mb-4">🍽️</div>
+          <div className="text-6xl mb-6 transition-opacity duration-300 ease-in-out">
+            {drinkEmojis[loadingEmojiIndex]}
+          </div>
           <div className="text-xl text-slate-600">천상의 궁합 찾는 중...</div>
         </div>
       </div>

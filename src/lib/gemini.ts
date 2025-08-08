@@ -69,17 +69,13 @@ export interface DrinkRecommendation {
 
 export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRecommendation[]> {
   const startTime = Date.now();
-  console.log(`🚀 Starting API call for: ${foodItem}`);
   
   // Check cache first
   const cacheKey = getCacheKey(foodItem);
   const cachedResult = getFromCache(cacheKey);
   if (cachedResult) {
-    console.log(`✅ Cache hit for: ${foodItem} (${Date.now() - startTime}ms)`);
     return cachedResult;
   }
-  
-  console.log(`❌ Cache miss for: ${foodItem}, calling API...`);
 
   const prompt = `당신은 한국인을 위한 요리에 어울리는 술 페어링 전문가입니다. 
 
@@ -176,16 +172,13 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
   for (const modelName of MODELS) {
     const modelStartTime = Date.now();
     try {
-      console.log(`🔄 Trying model: ${modelName}...`);
       const { response } = await tryModel(modelName, prompt);
 
       if (!response.ok) {
         const errorData = await response.text();
-        console.error(`❌ Model ${modelName} failed (${Date.now() - modelStartTime}ms):`, errorData);
         
         // If it's a rate limit error, try the next model
         if (response.status === 429) {
-          console.log(`⚠️ Rate limited on ${modelName} (${Date.now() - modelStartTime}ms), trying next model...`);
           continue;
         }
         
@@ -211,17 +204,11 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
       }
       
       const recommendations = JSON.parse(jsonMatch[0]);
-      const modelTime = Date.now() - modelStartTime;
-      const totalTime = Date.now() - startTime;
-      console.log(`✅ Successfully used model: ${modelName} (${modelTime}ms, total: ${totalTime}ms)`);
       
       // Cache the successful result
       setCache(cacheKey, recommendations);
       return recommendations;
     } catch (error) {
-      const modelTime = Date.now() - modelStartTime;
-      console.error(`❌ Error with model ${modelName} (${modelTime}ms):`, error);
-      
       // If it's a food validation error, throw immediately (don't retry)
       if (error instanceof Error && error.message.includes('음식이 아닙니다')) {
         throw error;
@@ -229,7 +216,6 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
       
       // If it's a rate limit error, try the next model
       if (error instanceof Error && error.message.includes('429')) {
-        console.log(`⚠️ Rate limited on ${modelName} (${modelTime}ms), trying next model...`);
         if (modelName === MODELS[MODELS.length - 1]) {
           throw new Error('문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
         }
