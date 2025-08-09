@@ -107,6 +107,38 @@ export default function DrinkResultsPage() {
     )
   }
 
+  const handleShareClick = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      // Track share event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'share_results', {
+          event_category: 'engagement',
+          drink_item: drinkItem,
+          value: 1
+        })
+      }
+      // Show temporary success feedback
+      const button = document.getElementById('share-results-button')
+      if (button) {
+        const originalHTML = button.innerHTML
+        button.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          URL 복사 완료
+        `
+        button.className = button.className.replace('text-primary/80', 'text-primary').replace('border-primary/80', 'border-primary')
+        setTimeout(() => {
+          button.innerHTML = originalHTML
+          button.className = button.className.replace('text-primary', 'text-primary/80').replace('border-primary', 'border-primary/80')
+        }, 2000)
+      }
+    } catch (err) {
+      console.error('Failed to copy URL:', err)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="w-full max-w-md mx-auto px-4 py-5">
@@ -159,7 +191,19 @@ export default function DrinkResultsPage() {
         </div>
 
         {/* Back Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-y-3">
+          <div>
+            <button 
+              id="share-results-button"
+              onClick={handleShareClick}
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 border border-primary hover:border-primary/80 px-4 py-2 rounded-lg transition-all duration-200 text-base font-medium"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+              결과 공유하기
+            </button>
+          </div>
           <Link href="/drink">
             <Button variant="ghost" className="text-slate-700 hover:text-slate-900 text-base font-medium">← 다른 술 알아보기</Button>
           </Link>
