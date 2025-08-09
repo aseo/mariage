@@ -53,11 +53,11 @@ export default function Home() {
     }
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-start justify-center pt-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-start justify-center pt-0">
       <div className="w-full max-w-md mx-auto px-4 py-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="mb-6">
+          <div className="mb-6 pt-4">
             <Image 
               src="/food-drink-pairing.png" 
               alt="Beer mug and pizza slice dancing together - perfect food and drink pairing"
@@ -81,7 +81,7 @@ export default function Home() {
             <Button 
               size="lg" 
               onClick={handleStartClick}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-xl h-auto min-h-[56px] sm:min-h-[60px] font-semibold w-80 rounded-xl"
+              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-lg h-auto min-h-[56px] sm:min-h-[60px] font-medium w-80 rounded-xl"
             >
               <span className="text-2xl">🥂</span>술 추천받기
             </Button>
@@ -90,7 +90,7 @@ export default function Home() {
           <Link href="/drink">
             <Button 
               size="lg" 
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-xl h-auto min-h-[56px] sm:min-h-[60px] font-semibold w-80 rounded-xl"
+              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-lg h-auto min-h-[56px] sm:min-h-[60px] font-medium w-80 rounded-xl"
             >
               <span className="text-2xl">🍲</span>안주 추천받기
             </Button>
