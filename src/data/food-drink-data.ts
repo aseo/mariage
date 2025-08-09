@@ -123,56 +123,44 @@ export const foodCategories: FoodDrinkItem[] = [
 export const drinkCategories: FoodDrinkItem[] = [
   // Korean Traditional Drinks
   { name: "소주", emoji: "🥃", category: "Korean Traditional" },
+  { name: "증류식 소주", emoji: "🥃", category: "Korean Traditional" },
+  { name: "과일 소주", emoji: "🥃", category: "Korean Traditional" },
   { name: "막걸리", emoji: "🍶", category: "Korean Traditional" },
-  { name: "동동주", emoji: "🍶", category: "Korean Traditional" },
-  { name: "청주", emoji: "🍶", category: "Korean Traditional" },
-  { name: "백세주", emoji: "🍶", category: "Korean Traditional" },
-  { name: "산사춘", emoji: "🍶", category: "Korean Traditional" },
+  { name: "청하", emoji: "🍶", category: "Korean Traditional" },
   
   // Korean Beer & Popular
   { name: "맥주", emoji: "🍺", category: "Korean Beer" },
-  { name: "카스", emoji: "🍺", category: "Korean Beer" },
-  { name: "하이트", emoji: "🍺", category: "Korean Beer" },
-  { name: "클라우드", emoji: "🍺", category: "Korean Beer" },
-  { name: "테라", emoji: "🍺", category: "Korean Beer" },
-  { name: "크래프트비어", emoji: "🍺", category: "Korean Beer" },
-  
-  // Korean Coffee Culture
-  { name: "아메리카노", emoji: "☕", category: "Korean Coffee" },
-  { name: "카페라떼", emoji: "☕", category: "Korean Coffee" },
-  { name: "카푸치노", emoji: "☕", category: "Korean Coffee" },
-  { name: "에스프레소", emoji: "☕", category: "Korean Coffee" },
-  { name: "카페모카", emoji: "☕", category: "Korean Coffee" },
-  { name: "바닐라라떼", emoji: "☕", category: "Korean Coffee" },
-  { name: "카라멜마끼아또", emoji: "☕", category: "Korean Coffee" },
-  
-  // Korean Tea & Traditional
-  { name: "녹차", emoji: "🫖", category: "Korean Tea" },
-  { name: "보리차", emoji: "🫖", category: "Korean Tea" },
-  { name: "옥수수차", emoji: "🫖", category: "Korean Tea" },
-  { name: "생강차", emoji: "🫖", category: "Korean Tea" },
-  { name: "유자차", emoji: "🫖", category: "Korean Tea" },
-  { name: "대추차", emoji: "🫖", category: "Korean Tea" },
-  { name: "인삼차", emoji: "🫖", category: "Korean Tea" },
+  { name: "IPA", emoji: "🍺", category: "Korean Beer" },
+  { name: "페일에일", emoji: "🍺", category: "Korean Beer" },
+  { name: "스타우트", emoji: "🍺", category: "Korean Beer" },
+  { name: "필스너", emoji: "🍺", category: "Korean Beer" },
+  { name: "밀맥주", emoji: "🍺", category: "Korean Beer" },
   
   // Korean Cocktails & Mixed
   { name: "소맥", emoji: "🍺", category: "Korean Mixed" },
-  { name: "폭탄주", emoji: "🥃", category: "Korean Mixed" },
-  { name: "깔루아밀크", emoji: "🥛", category: "Korean Mixed" },
-  { name: "코코팜", emoji: "🍹", category: "Korean Mixed" },
-  { name: "마이타이", emoji: "🍹", category: "Korean Mixed" },
-  { name: "피나콜라다", emoji: "🍹", category: "Korean Mixed" },
   
   // Popular in Korea (International)
-  { name: "와인", emoji: "🍷", category: "International" },
-  { name: "레드와인", emoji: "🍷", category: "International" },
-  { name: "화이트와인", emoji: "🥂", category: "International" },
+  { name: "레드 와인", emoji: "🍷", category: "International" },
+  { name: "카베르네 소비뇽", emoji: "🍷", category: "International" },
+  { name: "피노 누아", emoji: "🍷", category: "International" },
+  { name: "쉬라즈", emoji: "🍷", category: "International" },
+  { name: "말벡", emoji: "🍷", category: "International" },
+  { name: "진판델", emoji: "🍷", category: "International" },
+  { name: "메를로", emoji: "🍷", category: "International" },
+  { name: "로제 와인", emoji: "🍷", category: "International" },
+  { name: "화이트 와인", emoji: "🥂", category: "International" },
+  { name: "소비뇽블랑", emoji: "🥂", category: "International" },
+  { name: "샤르도네", emoji: "🥂", category: "International" },
+  { name: "리슬링", emoji: "🥂", category: "International" },
+  { name: "피노그리", emoji: "🥂", category: "International" },
+  { name: "까바", emoji: "🥂", category: "International" },
+  { name: "모스카토", emoji: "🥂", category: "International" },
   { name: "샴페인", emoji: "🍾", category: "International" },
   { name: "위스키", emoji: "🥃", category: "International" },
-  { name: "보드카", emoji: "🥃", category: "International" },
-  { name: "진", emoji: "🍸", category: "International" },
-  { name: "럼", emoji: "🥃", category: "International" },
-  { name: "테킬라", emoji: "🍹", category: "International" },
+  { name: "위스키(피트)", emoji: "🥃", category: "International" },
+  { name: "위스키(셰리)", emoji: "🥃", category: "International" },
+  { name: "위스키(버번)", emoji: "🥃", category: "International" },
+  { name: "위스키 하이볼", emoji: "🍹", category: "International" },
   
 ]
 

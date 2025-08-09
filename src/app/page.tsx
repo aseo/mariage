@@ -76,14 +76,23 @@ export default function Home() {
         </div>
 
         {/* CTA */}
-        <div className="max-w-md mx-auto space-y-4">
-          <Link href="/food" className="w-full">
+        <div className="w-full max-w-xl mx-auto px-4 py-4 flex flex-col items-center space-y-3">
+          <Link href="/food">
             <Button 
               size="lg" 
               onClick={handleStartClick}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-base sm:text-lg h-auto min-h-[56px] sm:min-h-[60px] font-medium w-full rounded-xl"
+              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-xl h-auto min-h-[56px] sm:min-h-[60px] font-semibold w-80 rounded-xl"
             >
-              시작하기
+              <span className="text-2xl">🥂</span>술 추천받기
+            </Button>
+          </Link>
+
+          <Link href="/drink">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white px-6 py-4 text-lg sm:text-xl h-auto min-h-[56px] sm:min-h-[60px] font-semibold w-80 rounded-xl"
+            >
+              <span className="text-2xl">🍲</span>안주 추천받기
             </Button>
           </Link>
           

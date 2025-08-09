@@ -237,8 +237,8 @@ export default function FoodResultsPage() {
         {/* Results */}
         <div className="max-w-4xl mx-auto space-y-6">
           {recommendations.map((drink, index) => (
-            <Card key={index} className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-              <CardHeader className="pb-4">
+            <Card key={index} className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-200 gap-3 py-5">
+              <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="text-4xl sm:text-5xl">
