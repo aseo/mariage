@@ -17,6 +17,7 @@ export default function FoodPage() {
   const [open, setOpen] = useState(false)
   const [displayedFoods, setDisplayedFoods] = useState(foodCategories.slice(0, 20))
   const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
   const router = useRouter()
 
   const handleCustomSubmit = () => {
@@ -49,12 +50,13 @@ export default function FoodPage() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const error = urlParams.get('error')
+    const message = urlParams.get('message')
     if (error === 'invalid_food') {
       setShowToast(true)
-      // Remove error parameter from URL
+      setToastMessage(message || '음식 이름을 다시 입력해주세요.')
+      // Remove error and message parameters from URL
       const newUrl = window.location.pathname
       window.history.replaceState({}, '', newUrl)
-      // Hide toast after 3 seconds
       setTimeout(() => setShowToast(false), 3000)
     }
   }, [])
@@ -86,7 +88,7 @@ export default function FoodPage() {
       {/* Toast Notification */}
       {showToast && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-slate-800/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5 animate-in slide-in-from-top-2 duration-300 text-sm whitespace-nowrap">
-          <span className="font-medium">다른 음식으로 검색해주세요</span>
+          <span className="font-medium">{toastMessage}</span>
           <button 
             onClick={() => setShowToast(false)}
             className="ml-1.5 hover:bg-white/20 rounded-full w-3.5 h-3.5 flex items-center justify-center text-xs"

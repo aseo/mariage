@@ -140,14 +140,24 @@ export default function FoodResultsPage() {
         }
         
         const data = await response.json()
-        setRecommendations(data.recommendations)
+        
+        // Check if data is an array and if the first item has an error
+        if (Array.isArray(data) && data.length === 1 && data[0] && typeof data[0] === 'object' && 'error' in data[0]) {
+          // This is an error response from Gemini - redirect to food page with error
+          const errorMessage = data[0].message || '입력하신 값은 음식이 아닙니다.'
+          window.location.href = `/food?error=invalid_food&message=${encodeURIComponent(errorMessage)}`
+          return
+        }
+        
+        // Data is a valid recommendations array
+        setRecommendations(data)
         
         // Track successful results view
         if (typeof window !== 'undefined' && window.gtag) {
           window.gtag('event', 'view_results', {
             event_category: 'results',
             food_item: food,
-            result_count: data.recommendations.length,
+            result_count: data.length,
             value: 1
           })
         }

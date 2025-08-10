@@ -62,10 +62,34 @@ export default function DrinkResultsPage() {
         }
 
         const data = await response.json()
-        setRecommendations(data.recommendations)
+        
+        // Check if data is an array and if the first item has an error
+        if (Array.isArray(data) && data.length === 1 && data[0] && typeof data[0] === 'object' && 'error' in data[0]) {
+          // This is an error response from Gemini - redirect to drink page with error
+          const errorMessage = data[0].message || '입력하신 값은 술이 아닙니다.'
+          window.location.href = `/drink?error=invalid_drink&message=${encodeURIComponent(errorMessage)}`
+          return
+        }
+        
+        // Data is a valid recommendations array
+        setRecommendations(data)
+        
+        // Track successful results view
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'view_results', {
+            event_category: 'results',
+            drink_item: drink,
+            result_count: data.length,
+            value: 1
+          })
+        }
       } catch (err) {
         console.error('Error fetching recommendations:', err)
-        setError('Failed to load recommendations. Please try again.')
+        if (err instanceof Error && err.message.includes('술이 아닙니다')) {
+          setError(err.message)
+        } else {
+          setError('Failed to load recommendations. Please try again.')
+        }
       } finally {
         setIsLoading(false)
       }

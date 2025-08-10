@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
 
     const recommendations = await getFoodRecommendations(sanitizedDrink);
 
-    const response = NextResponse.json({ recommendations });
+    // Return the array directly for Option 1
+    const response = NextResponse.json(recommendations);
     response.headers.set('Cache-Control', 'public, max-age=86400');
     response.headers.set('Vary', 'Accept, Accept-Language');
     return response;
