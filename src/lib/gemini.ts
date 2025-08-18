@@ -93,7 +93,7 @@ export async function getDrinkRecommendations(foodItem: string): Promise<DrinkRe
 오류 케이스: 배열에는 정확히 1개의 에러 객체만 들어갑니다.
 배열 외의 텍스트는 절대 포함하지 마세요.
 
-정상 객체 스키마(각 1개 요소. 스키마 예시만, 내용 임의):
+정상 객체 스키마(각 1개 요소. 스키마 예시만, 내용은 임의이니 절대 참고하지 마시고, 사용자 입력 값에 맞게 채워주세요.):
 rank (number: 1|2|3)
 category (string: 예 "맥주", "와인", "위스키" 등)
 name (string: 예 "IPA", "소주", "핑크 모스카토")
@@ -117,7 +117,7 @@ imagePlaceholder (string: 이모지 1개)
 
 최종 결과는 JSON 배열만 출력.
 
-정상 출력 예(구조 예시만, 내용 임의):
+정상 출력 예(구조 예시만, 내용은 임의의니 절대 참고하지 마시고, 사용자 입력 값에 맞게 채워주세요.):
 [
 {
 "rank": 1,
@@ -273,7 +273,7 @@ export async function getFoodRecommendations(drinkItem: string): Promise<FoodRec
 오류 케이스: 배열에는 정확히 1개의 에러 객체만 들어갑니다.
 배열 외의 텍스트는 절대 포함하지 마세요.
 
-정상 객체 스키마(각 1개 요소. 스키마 예시만, 내용 임의):
+정상 객체 스키마(각 1개 요소. 스키마 예시만, 내용은 임의이니 절대 참고하지 마시고, 사용자 입력 값에 맞게 채워주세요.):
 rank (number: 1|2|3)
 category (string: 예 "구이", "탕/찌개", "면", "전" 등)
 name (string: 음식명)
@@ -302,7 +302,7 @@ explanation 규칙:
 최종 결과는 JSON만 배열만 출력.
 
 
-정상 출력 예(구조 예시만, 내용 임의):
+정상 출력 예(구조 예시만, 내용은 임의이니 절대 참고하지 마시고, 사용자 입력 값에 맞게 채워주세요.):
 [
 {
 "rank": 1,
